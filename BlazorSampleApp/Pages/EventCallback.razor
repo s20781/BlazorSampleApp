@@ -1,0 +1,49 @@
+﻿@page "/deletestudent"
+
+<h3>EventCallback</h3>
+<table>
+    @if (students.Count == 0 )
+    {
+        <tr>
+            <td>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
+            </td>
+        </tr>
+    }
+    else
+    {
+        @foreach (var s in students)
+        {
+            <StudentComponent Student="s" OnDeleteClicked="DeleteStudent"/>
+        }
+    }
+    
+</table>
+
+@code {
+    private List<Student> students = new List<Student>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await Task.Delay(4000);
+
+        students.Add(new Student
+        {
+            FirstName = "Jan",
+            LastName = "Kowalski"
+        });
+        students.Add(new Student
+        {
+            FirstName = "Kasia",
+            LastName = "Ciodyk"
+        });
+
+    }
+
+    public void DeleteStudent(Student student)
+    {
+        Console.WriteLine("Deleted student" + student.FirstName);
+    }
+}

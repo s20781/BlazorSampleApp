@@ -1,0 +1,16 @@
+﻿@page "/bind"
+
+<h3>Bind</h3>
+<p>Curren count: @currentCount</p>
+
+<button @onclick="Increment">Click me</button>
+<input type = "number" @bind="currentCount" />
+
+@code {
+    private int currentCount = 0;
+    private void Increment()
+    {
+        currentCount++;
+    }
+
+}

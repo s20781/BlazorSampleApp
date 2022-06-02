@@ -1,0 +1,75 @@
+﻿@page "/students"
+
+
+<h3>Students</h3>
+<p> 
+    Counter : @Counter
+</p>
+
+<table>
+    @if (students.Count == 0 )
+    {
+        <tr>
+            <td>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
+            </td>
+        </tr>
+    }
+    else
+    {
+        @foreach (var s in students)
+        {
+            <tr>
+                <td>
+                    @s.FirstName
+                </td>
+                <td>
+                    @s.LastName
+                </td>
+            </tr>
+        }
+    }
+    
+</table>
+
+
+
+@code {
+
+    public int Counter { get; set; }
+
+    private List<Student> students = new List<Student>();
+    protected override async Task OnInitializedAsync()
+    {
+
+        await Task.Delay(4000);
+        
+        students.Add(new Student
+        {
+            FirstName = "Jan",
+            LastName = "Kowalski"
+        });
+        students.Add(new Student
+        {
+            FirstName = "Kasia",
+            LastName = "Ciodyk"
+        });
+        students.Add(new Student
+        {
+            FirstName = "Franek",
+            LastName = "Baron"
+        });
+        students.Add(new Student
+        {
+            FirstName = "Piter",
+            LastName = "Kowalski"
+        });
+    }
+
+
+    private void Increment()
+    {
+        Counter++;
+        Console.WriteLine("Incremented");
+    }
+}
