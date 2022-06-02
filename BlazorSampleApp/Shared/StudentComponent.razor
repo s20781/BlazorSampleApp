@@ -1,17 +1,14 @@
-﻿<tr>
+﻿@using Syncfusion.Blazor.Buttons
+<tr>
+    
     <td>
-        @Student.FirstName
+        <button class="btn btn-danger"@onclick="@(()=>OnDeleteClicked.InvokeAsync(Student))">
+            <span class = "oi oi-delete"></span>
+           </button>
     </td>
-    <td>
-        @Student.LastName
-    </td>
-    <td>
-        <button @onclick="@(()=>OnDeleteClicked.InvokeAsync(Student))">Delete</button>
-    </td>
+        
 </tr>
 
-
-<h3>StudentComponent</h3>
 
 @code {
     [Parameter]

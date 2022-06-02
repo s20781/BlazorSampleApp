@@ -1,0 +1,141 @@
+﻿
+@page "/deletestudent"
+
+<h3>Studenci</h3>
+@inject IJSRuntime js
+
+<table>
+    @if (students.Count == 0 )
+    {
+        <tr>
+            <td>
+                <img src = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
+            </td>
+        </tr>
+    }
+    else
+    {
+        <TableTemplate Items="students">
+            <TableHeader>
+                <th>
+                    <button type="button" class="btn btn-outline-dark"  @onclick="SortStudentById">Id</button>
+                </th>
+                <th><button type="button" class="btn btn-outline-dark" @onclick="SortStudentByName">FirstName</button></th>
+                <th><button type="button" class="btn btn-outline-dark" @onclick="SortStudentByLastName">LastName</button></th>
+                <th><button type="button" class="btn btn-outline-dark" @onclick="SortStudentByCity">City</button></th>
+                <th>Actions</th>
+
+            </TableHeader>
+            <RowTemplate Context = "Student">
+                <th>
+                    <button type = "button" class="btn btn-outline-primary" @onclick="Navigate">
+                        <img src = "https://www.pngitem.com/pimgs/m/576-5768680_avatar-png-icon-person-icon-png-free-transparent.png" height="15" width="15">
+                    </button>
+                      
+                        
+               </th>
+               <td>@Student.FirstName</td>
+               <td>@Student.LastName</td>
+               <td>@Student.City</td>
+               <td>
+                    
+                   <StudentComponent Student=@Student OnDeleteClicked="DeleteStudent"/>
+                    
+                </td>
+                    
+                
+            </RowTemplate>
+        </TableTemplate>
+    }
+    
+</table>
+
+@code {
+    private List<Student> students = new List<Student>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await Task.Delay(1000);
+
+        students.Add(new Student
+        {
+            Id = 1,
+            FirstName = "Jan",
+            LastName = "Kowalski",
+            City = "Warsaw"
+
+        });
+        students.Add(new Student
+        {
+            Id = 2,
+            FirstName = "Kasia",
+            LastName = "Ciodyk",
+            City = "Berlin"
+        });
+        students.Add(new Student
+        {
+            Id = 3,
+            FirstName = "Adam",
+            LastName = "Adam",
+            City = "Wrocław"
+
+        });
+        students.Add(new Student
+        {
+            Id = 4,
+            FirstName = "Przemysław",
+            LastName = "Ziom",
+            City = "Warsaw"
+        });
+        students.Add(new Student
+        {
+            Id = 5,
+            FirstName = "John",
+            LastName = "Smith",
+            City = "Chicago"
+
+        });
+        students.Add(new Student
+        {
+            Id = 6,
+            FirstName = "Johnatan",
+            LastName = "Orton",
+            City = "Los Angeles"
+        });
+
+    }
+
+    public async Task DeleteStudent(Student student)
+    {
+        var confirmed = await js.InvokeAsync<bool>("confirm", "Are you sure?");
+
+        Console.WriteLine("Deleted student" + student.FirstName);
+
+
+    }
+
+    public void SortStudentById()
+    {
+        students = students.OrderBy(x=>x.Id).ToList();
+    }
+    public void SortStudentByName()
+    {
+        students = students.OrderBy(x=>x.FirstName).ToList();
+    }
+    public void SortStudentByLastName()
+    {
+        students = students.OrderBy(x=>x.LastName).ToList();
+    }
+    public void SortStudentByCity()
+    {
+        students = students.OrderBy(x=>x.City).ToList();
+    }
+
+    public void Navigate()
+    {
+        Console.WriteLine("Clicked.." + navigationManager.Uri);
+        navigationManager.NavigateTo("/students");
+    }
+}
