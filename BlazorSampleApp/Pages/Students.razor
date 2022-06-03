@@ -1,75 +1,40 @@
-﻿@page "/students"
+﻿@page "/students/{id}/{Name}/{LastName}/{City}"
 
 
-<h3>Students</h3>
-<p> 
-    Counter : @Counter
+<h3>Students Detail</h3>
+
+
+<p>
+    Id : @id
+</p>
+<p>
+    FirstName : @Name
+</p>
+<p>
+    LastName : @LastName
+</p>
+<p>
+    City : @City
 </p>
 
-<table>
-    @if (students.Count == 0 )
-    {
-        <tr>
-            <td>
-                <img src = "https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
-            </td>
-        </tr>
-    }
-    else
-    {
-        @foreach (var s in students)
-        {
-            <tr>
-                <td>
-                    @s.FirstName
-                </td>
-                <td>
-                    @s.LastName
-                </td>
-            </tr>
-        }
-    }
-    
-</table>
 
 
 
 @code {
+    [Parameter]
+    public string id { get; set; }
 
-    public int Counter { get; set; }
+    [Parameter]
+    public string Name { get; set; }
 
-    private List<Student> students = new List<Student>();
-    protected override async Task OnInitializedAsync()
-    {
+    [Parameter]
+    public string LastName { get; set; }
 
-        await Task.Delay(4000);
-        
-        students.Add(new Student
-        {
-            FirstName = "Jan",
-            LastName = "Kowalski"
-        });
-        students.Add(new Student
-        {
-            FirstName = "Kasia",
-            LastName = "Ciodyk"
-        });
-        students.Add(new Student
-        {
-            FirstName = "Franek",
-            LastName = "Baron"
-        });
-        students.Add(new Student
-        {
-            FirstName = "Piter",
-            LastName = "Kowalski"
-        });
-    }
+    [Parameter]
+    public string City { get; set; }
 
+    
+  
 
-    private void Increment()
-    {
-        Counter++;
-        Console.WriteLine("Incremented");
-    }
+    
 }

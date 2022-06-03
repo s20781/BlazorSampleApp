@@ -3,6 +3,7 @@
 
 <h3>Studenci</h3>
 @inject IJSRuntime js
+@inject NavigationManager navigationManager
 
 <table>
     @if (students.Count == 0 )
@@ -28,7 +29,7 @@
             </TableHeader>
             <RowTemplate Context = "Student">
                 <th>
-                    <button type = "button" class="btn btn-outline-primary" @onclick="Navigate">
+                    <button type = "button" class="btn btn-outline-primary" @onclick="() => OnButtonClicked(Student.Id,Student.FirstName,Student.LastName,Student.City)">
                         <img src = "https://www.pngitem.com/pimgs/m/576-5768680_avatar-png-icon-person-icon-png-free-transparent.png" height="15" width="15">
                     </button>
                       
@@ -133,9 +134,9 @@
         students = students.OrderBy(x=>x.City).ToList();
     }
 
-    public void Navigate()
+    private void OnButtonClicked(int id, string name,string lastname,string city)
     {
         Console.WriteLine("Clicked.." + navigationManager.Uri);
-        navigationManager.NavigateTo("/students");
+        navigationManager.NavigateTo($"/students/{id}/{name}/{lastname}/{city}");
     }
 }
